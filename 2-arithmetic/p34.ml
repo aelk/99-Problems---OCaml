@@ -11,13 +11,12 @@ let phi m =
 ;;
 
 let phi2 m =
-  let int_of_bool b = if b then 1 else 0 in
-  let rec phi_helper m r acc =
-    match r with
-    | 0 -> acc
-    | _ -> phi_helper m (r - 1) (acc + int_of_bool (coprime m r))
+  let rec phi_helper r acc =
+    if r < m then
+      phi_helper (r + 1) (acc + if coprime m r then 1 else 0)
+    else acc
   in
-  phi_helper m (m - 1) 0
+  if m = 1 then 1 else phi_helper 1 0
 ;;
   
 assert (phi 10 = 4) ;;
