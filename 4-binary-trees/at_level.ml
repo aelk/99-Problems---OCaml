@@ -3,10 +3,12 @@ type 'a binary_tree =
     | Node of 'a * 'a binary_tree * 'a binary_tree
 ;;
 
-let rec leaves = function
+let rec at_level tree level =
+    match tree with
     | Empty -> []
-    | Node(n, Empty, Empty) -> [n]
-    | Node(_, l, r) -> (leaves l)@(leaves r)
+    | Node(n, l, r) ->
+        if level = 1 then [n]
+        else (at_level l (level - 1))@(at_level r (level - 1))
 ;;
 
 let example_tree =
@@ -14,5 +16,5 @@ let example_tree =
          Node('c', Empty, Node('f', Node('g', Empty, Empty), Empty)))
 ;;
 
-assert (leaves Empty = []) ;;
-assert (leaves example_tree = ['d'; 'e'; 'g']) ;;
+assert (at_level example_tree 2 = ['b'; 'c']) ;;
+assert (at_level example_tree 5 = []) ;;
