@@ -3,12 +3,9 @@ type 'a binary_tree =
     | Node of 'a * 'a binary_tree * 'a binary_tree
 ;;
 
-let internals tree =
-    let rec internals_aux acc = function
-        | Empty | Node(_, Empty, Empty) -> acc
-        | Node(n, l, r) -> [n]@(internals_aux acc l)@(internals_aux acc r)
-    in
-    internals_aux [] tree
+let rec internals = function
+    | Empty | Node(_, Empty, Empty) -> []
+    | Node(n, l, r) -> [n]@(internals l)@(internals r)
 ;;
 
 let example_tree =
